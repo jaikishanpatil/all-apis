@@ -7,7 +7,7 @@ const config = {
         database: process.env.DB_NAME,              //databse name
         multipleStatements: true,
     },
-    secret: "0ae316f776a491117d25362652421e090f42d8ba4b2f709fc049775887990db76824f2857eb6ba24a9c90784fd4564fdf00aed47b1d349a37aec4b1cf7659414"
+    secret: process.env.SECRET
 }
 
 module.exports = config;
