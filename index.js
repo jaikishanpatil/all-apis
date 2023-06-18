@@ -54,6 +54,7 @@ function verifyToken(req, res, next) {
     });
 }
 
+app.use("/api/user", require("./controllers/user.controller"));
 // globle error handler 
 app.use(errorHandler);
 
