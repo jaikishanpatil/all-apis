@@ -8,7 +8,7 @@ module.exports = {
 }
 
 async function authenticate({ email, password }) {
-    const user = await userService.getUserByEmailOrPhoneNumberAndPassword(
+    const user = await userService.loginUserByEmailOrPhoneNumberAndPassword(
         email,
         password
     );

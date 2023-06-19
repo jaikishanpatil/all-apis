@@ -9,7 +9,7 @@ module.exports = {
     getAllUsers,
     getUserById,
     create,
-    getUserByEmailOrPhoneNumberAndPassword
+    loginUserByEmailOrPhoneNumberAndPassword
 }
 
 //functions for api uses
@@ -38,7 +38,7 @@ async function create(params) {  //for admin and user level to add data into dat
     }
 }
 
-async function getUserByEmailOrPhoneNumberAndPassword(email, password) {   //function to login user
+async function loginUserByEmailOrPhoneNumberAndPassword(email, password) {   //function to login user
     const user = await db.User.findOne({
         where: {
             [Op.or]: [{ email: email || null }, { phoneNumber: email || null }],
