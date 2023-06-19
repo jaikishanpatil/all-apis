@@ -8,11 +8,12 @@ const jwt = require("jsonwebtoken");
 module.exports = {
     getAllUsers,
     getUserById,
-    create
+    create,
+    getUserByEmailOrPhoneNumberAndPassword
 }
 
 //functions for api uses
-async function getAllUsers() {
+async function getAllUsers() {  //for admin level to get all users
     return db.User.findAll();
 }
 
@@ -23,17 +24,34 @@ async function getUserById(id) {
     };
 }
 
-async function create(params) {
+async function create(params) {  //for admin and user level to add data into database
     if (await db.User.findOne({ where: { email: params.email } })) {
         throw `Email '${params.email}' is alredy registered`;
     }
-    if(params.password === params.confirmPassword){
+    if (params.password === params.confirmPassword) {
         const user = new db.User(params);
-        user.passwordHash = await bcrypt.hash(params.password, 10); //hash the password
-    
+        user.password = await bcrypt.hash(params.password, 10); //hash the password
+
         await user.save();
-    }else{
+    } else {
         throw `Password dosen't match with confirm password`;
+    }
+}
+
+async function getUserByEmailOrPhoneNumberAndPassword(email, password) {   //function to login user
+    const user = await db.User.findOne({
+        where: {
+            [Op.or]: [{ email: email || null }, { phoneNumber: email || null }],
+            [Op.and]: [{ isactive: 1 }],
+        }
+    });
+
+    if (!user) throw 'User does not exist';
+    const passwordMatched = await bcrypt.compare(password, user.password);
+    if (!passwordMatched) throw "Username and Password dose not match";
+
+    return {
+        ...omitPassword(user.dataValues)
     }
 }
 

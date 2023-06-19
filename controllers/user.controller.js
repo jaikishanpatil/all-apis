@@ -6,16 +6,30 @@ const userService = require("../services/user.service");
 
 // routes
 
-router.post("/create",crateSchema,create);
+router.post("/create", crateSchema, create);
+router.get("/:id",getUserById)
+router.get("/",getAll);
 
 module.exports = router;
 
-function create(req, res, next) {
+function getAll(req, res, next) {
     userService
-      .create(req.body)
-      .then(() => res.json({ message: "User created" ,response:res.req.body}))
+      .getAllUsers()
+      .then((users) => res.json(users))
       .catch(next);
   }
+function getUserById(req, res, next) {
+    userService.getUserById(req.params.id)
+        .then((user) => res.json(user))
+        .catch(next)
+}
+
+function create(req, res, next) {
+    userService
+        .create(req.body)
+        .then(() => res.json({ message: "User created", response: res.req.body }))
+        .catch(next);
+}
 
 function crateSchema(res, req, next) {
     const schema = Joi.object({
@@ -27,5 +41,5 @@ function crateSchema(res, req, next) {
         address: Joi.string(),
         gender: Joi.string()
     });
-    validateRequest(req,next,schema);
+    validateRequest(req, next, schema);
 }
