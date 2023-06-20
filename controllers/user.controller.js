@@ -7,20 +7,22 @@ const userService = require("../services/user.service");
 // routes
 
 router.post("/create", crateSchema, create);
-router.get("/:id",getUserById)
-router.get("/",getAll);
+router.get("/:id", getUserById)
+router.get("/", getAll);
 
 module.exports = router;
 
 function getAll(req, res, next) {
     userService
-      .getAllUsers()
-      .then((users) => res.json(users))
-      .catch(next);
-  }
+        .getAllUsers()
+        .then((users) => res.json(users))
+        .catch(next);
+}
 function getUserById(req, res, next) {
-    userService.getUserById(req.params.id)
-        .then((user) => res.json(user))
+    userService
+        .getUserById(req.params.id)
+        .then((users) => 
+        res.json(users))
         .catch(next)
 }
 

@@ -62,13 +62,13 @@ async function loginUserByEmailOrPhoneNumberAndPassword(email, password) {   //f
 
 async function getUser(id) {
     const user = await db.User.findByPk(id);
-    if (!user || !user?.isActive) throw "User Not Found";
+    if (!user) throw "User Not Found";
 
     return user;
 }
 
-async function omitPassword(user) {
-    const { passwordHash, ...userWithoutPassword } = user;
+function omitPassword(user) {
+    const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
 }
 
