@@ -9,7 +9,9 @@ module.exports = {
     getAllUsers,
     getUserById,
     create,
-    loginUserByEmailOrPhoneNumberAndPassword
+    loginUserByEmailOrPhoneNumberAndPassword,
+    update,
+    deleteUser
 }
 
 //functions for api uses
@@ -36,6 +38,24 @@ async function create(params) {  //for admin and user level to add data into dat
     } else {
         throw `Password dosen't match with confirm password`;
     }
+}
+async function update(id,params) {  //for admin and user level to update data into database
+    const user = await getUser(id);
+    const emailChanged = params.email && params.email !== user.email;
+
+    if(emailChanged && (await db.User.findOne({where:{email:email}}))){
+        throw `Email '${params.email}' is alredy registered`;
+    }
+    if(params.password){
+        params.password = await bcrypt.hash(params.password,10);
+    }
+    Object.assign(user,params);
+    await user.save();
+}
+
+async function deleteUser(id) {
+    const user =await getUser(id);
+    await user.destroy();
 }
 
 async function loginUserByEmailOrPhoneNumberAndPassword(email, password) {   //function to login user
