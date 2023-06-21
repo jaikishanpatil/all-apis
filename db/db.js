@@ -21,6 +21,7 @@ async function initilize() {
     });
     // init module and add them to the exported db object 
     db.User = require("../models/user.modle")(sequelize);
+    db.Product = require("../models/product.model")(sequelize);
     
 
     await sequelize.sync({alter:true});
