@@ -43,7 +43,7 @@ async function deleteProduct(id) {
 
 async function filterData(params) {
     const filters = {};
-    const { productName, productCategory, minPrice, maxPrice } = params      // new add can be {brand, color, size , rating}
+    const { productName, productCategory, minPrice, maxPrice, createdAfter, createdBefore, updatedAfter, updatedBefore } = params      // new add can be {brand, color, size , rating}
     if (productName) {
         filters.productName = {
             [Op.like]: `%${productName}%`
@@ -67,6 +67,28 @@ async function filterData(params) {
     if (maxPrice) {
         filters.productPrice = {
             [Op.lte]: maxPrice
+        }
+    }
+    if (createdAfter) {
+        filters.createdAt = {
+            [Op.gte]: new Date(createdAfter)
+        }
+    }
+    if(createdBefore){
+        filters.createdAt = {
+            ...filters.createdAt,
+            [Op.lte]:new Date(createdBefore)
+        }
+    }
+    if (updatedAfter) {
+        filters.updatedAt = {
+            [Op.gte]: new Date(updatedAfter)
+        }
+    }
+    if(updatedBefore){
+        filters.updatedAt = {
+            ...filters.updatedAt,
+            [Op.lte] : new Date(updatedBefore)
         }
     }
 
