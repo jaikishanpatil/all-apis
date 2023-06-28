@@ -10,6 +10,7 @@ router.get("/:id", getProductById);
 router.post("/create", crateSchema, crateProduct);
 router.put("/update/:id", updateSchema, updateProduct);
 router.delete("/delete/:id", _delete);
+router.post("/filters", filters);
 
 function getAll(req, res, next) {
     productService
@@ -44,6 +45,13 @@ function _delete(req, res, next) {
         .deleteProduct(req.params.id)
         .then(() => res.json({ message: "Product deleted Successfully....!" }))
         .catch(next);
+}
+
+function filters(req, res, next) {
+    productService
+        .filterData(req.body)
+        .then((filter)=>res.json(filter))
+        .catch(next)
 }
 
 function crateSchema(res, req, next) {
