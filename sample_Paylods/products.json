@@ -1,0 +1,34 @@
+{
+  "filters_api": {
+    "productName": "shirt",
+    "gender": ["male", "female"],
+    "productCategory": ["clothing", "accessories"],
+    "minPrice": 10,
+    "maxPrice": 50,
+    "brand": "Nike",
+    "color": ["red", "blue"],
+    "size": ["S", "M"],
+    "rating": 4,
+    "availability": true,
+    "createdAfter": "2023-01-01",
+    "createdBefore": "2023-06-30",
+    "updatedAfter": "2023-05-01",
+    "updatedBefore": "2023-06-15"
+  },
+  "Crate_Api": {
+    "productName": "",
+    "productDescription": "",
+    "productPrice": "",
+    "productCategory": "",
+    "productQuantity": "int value",
+    "productImage": "url"
+  },
+  "Update_Api": {
+    "productName": "",
+    "productDescription": "",
+    "productPrice": "",
+    "productCategory": "",
+    "productQuantity": "int value",
+    "productImage": "url"
+  }
+}

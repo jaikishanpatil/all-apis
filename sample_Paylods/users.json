@@ -1,0 +1,22 @@
+{
+  "crate_api": {
+    "name": "",
+    "email": "",
+    "password": "",
+    "confirmPassword": "",
+    "phoneNumber": "",
+    "address": "",
+    "gender": "",
+    "image": "",
+    "dob": ""
+  },
+  "Update_api": {
+    "name": "",
+    "email": "",
+    "password": "",
+    "confirmPassword": "",
+    "phoneNumber": "",
+    "address": "",
+    "gender": ""
+  }
+}
