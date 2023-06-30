@@ -57,6 +57,7 @@ function verifyToken(req, res, next) {
 app.use("/",require("./controllers/admin.controller"));
 app.use("/api/user",verifyToken, require("./controllers/user.controller"));
 app.use("/api/product",verifyToken, require("./controllers/product.controller"));
+app.use("/api/cart",verifyToken,require("./controllers/cart.controller"));
 // globle error handler 
 app.use(errorHandler);
 
