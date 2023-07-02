@@ -11,7 +11,8 @@ module.exports = {
     create,
     loginUserByEmailOrPhoneNumberAndPassword,
     update,
-    deleteUser
+    deleteUser,
+    filters
 }
 
 //functions for api uses
@@ -39,22 +40,22 @@ async function create(params) {  //for admin and user level to add data into dat
         throw `Password dosen't match with confirm password`;
     }
 }
-async function update(id,params) {  //for admin and user level to update data into database
+async function update(id, params) {  //for admin and user level to update data into database
     const user = await getUser(id);
     const emailChanged = params.email && params.email !== user.email;
 
-    if(emailChanged && (await db.User.findOne({where:{email:email}}))){
+    if (emailChanged && (await db.User.findOne({ where: { email: email } }))) {
         throw `Email '${params.email}' is alredy registered`;
     }
-    if(params.password){
-        params.password = await bcrypt.hash(params.password,10);
+    if (params.password) {
+        params.password = await bcrypt.hash(params.password, 10);
     }
-    Object.assign(user,params);
+    Object.assign(user, params);
     await user.save();
 }
 
 async function deleteUser(id) {
-    const user =await getUser(id);
+    const user = await getUser(id);
     await user.destroy();
 }
 
@@ -75,6 +76,30 @@ async function loginUserByEmailOrPhoneNumberAndPassword(email, password) {   //f
     }
 }
 
+async function filters(params) {
+    const {
+        search
+    } = params
+
+    const result = await db.User.findAll({
+        where: {
+            [Op.or]: [
+                { email: { [Op.like]: `%${search || ""}%` } },
+                { name: { [Op.like]: `%${search || ""}%` } },
+                { phoneNumber: { [Op.like]: `%${search || ""}%` } },
+            ]
+        }
+    })
+
+    const users=[]
+    result.forEach((x,i)=>{
+        x=omitPassword(x.dataValues)
+        users.push(omitPassword(x))
+    })
+    return {
+        users
+    }
+}
 
 
 

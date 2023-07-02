@@ -9,7 +9,8 @@ router.put("/update/:id", updateSchema, update);
 router.post("/create", crateSchema, create);
 router.get("/:id", getUserById)
 router.get("/", getAll);
-router.delete("/:id",_delete);
+router.delete("/:id", _delete);
+router.post("/filters",filters);
 
 module.exports = router;
 
@@ -38,11 +39,17 @@ function update(req, res, next) {
         .then(() => res.json({ message: "User Updated", response: res.req.body }))
         .catch(next);
 }
-function _delete(req,res,next) {
+function _delete(req, res, next) {
     userService
         .deleteUser(req.params.id)
-        .then(()=>res.json({message:"User Deleted Successfully..!"}))
+        .then(() => res.json({ message: "User Deleted Successfully..!" }))
         .catch(next);
+}
+function filters(req, res, next) {
+    userService
+        .filters(req.body)
+        .then((user) => res.json(user))
+        .catch(next)
 }
 function crateSchema(res, req, next) {
     const schema = Joi.object({
