@@ -13,7 +13,10 @@
     "createdAfter": "2023-01-01",
     "createdBefore": "2023-06-30",
     "updatedAfter": "2023-05-01",
-    "updatedBefore": "2023-06-15"
+    "updatedBefore": "2023-06-15",
+    "search": "",
+    "sortBy": "",
+    "sortOrder": ""
   },
   "Crate_Api": {
     "productName": "",

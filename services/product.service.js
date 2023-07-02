@@ -43,7 +43,18 @@ async function deleteProduct(id) {
 
 async function filterData(params) {
     const filters = {};
-    const { productName, productCategory, minPrice, maxPrice, createdAfter, createdBefore, updatedAfter, updatedBefore } = params      // new add can be {brand, color, size , rating}
+    const { 
+        search,
+        productName,
+        productCategory,
+        minPrice,
+        maxPrice,
+        createdAfter,
+        createdBefore,
+        updatedAfter,
+        updatedBefore,
+        sortBy,
+        sortOrder } = params      // new add can be {brand, color, size , rating}
     if (productName) {
         filters.productName = {
             [Op.like]: `%${productName}%`
@@ -74,10 +85,10 @@ async function filterData(params) {
             [Op.gte]: new Date(createdAfter)
         }
     }
-    if(createdBefore){
+    if (createdBefore) {
         filters.createdAt = {
             ...filters.createdAt,
-            [Op.lte]:new Date(createdBefore)
+            [Op.lte]: new Date(createdBefore)
         }
     }
     if (updatedAfter) {
@@ -85,10 +96,10 @@ async function filterData(params) {
             [Op.gte]: new Date(updatedAfter)
         }
     }
-    if(updatedBefore){
+    if (updatedBefore) {
         filters.updatedAt = {
             ...filters.updatedAt,
-            [Op.lte] : new Date(updatedBefore)
+            [Op.lte]: new Date(updatedBefore)
         }
     }
 
@@ -123,7 +134,21 @@ async function filterData(params) {
     //         [Op.gte] : rating
     //     }
     // }
-    const result = await db.Product.findAll({ where: filters });
+    const sorting = [];
+    if (sortBy && sortOrder) {
+        const order = sortOrder.toLowerCase() === 'asc' ? 'ASC' : 'DESC';
+        sorting.push([sortBy, order])
+    }
+    const result = await db.Product.findAll({
+        where: {
+            [Op.or]: [
+                { productName: { [Op.like]: `%${search || ""}%` } },
+                { productCategory: { [Op.like]: `%${search || ""}%` } },
+            ],
+            ...filters
+        },
+        order: sorting
+    });
     return result;
 }
 
