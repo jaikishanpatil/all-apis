@@ -58,6 +58,7 @@ app.use("/",require("./controllers/admin.controller"));
 app.use("/api/user",verifyToken, require("./controllers/user.controller"));
 app.use("/api/product",verifyToken, require("./controllers/product.controller"));
 app.use("/api/cart",verifyToken,require("./controllers/cart.controller"));
+app.use("/api/bank",verifyToken,require("./controllers/bank_system.controller"))
 // globle error handler 
 app.use(errorHandler);
 

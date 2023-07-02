@@ -23,6 +23,7 @@ async function initilize() {
     db.User = require("../models/user.modle")(sequelize);
     db.Product = require("../models/product.model")(sequelize);
     db.cart = require("../models/cart.model")(sequelize);
+    db.bank_system = require("../models/bank_system.model")(sequelize);
     // db.cart.belongsTo(db.User);
     // db.cart.belongsTo(db.Product);
 

@@ -1,0 +1,37 @@
+{
+  "bank_system": {
+    "accountOwnerName": "",
+    "contactNumber": "",
+    "accountEmail": "",
+    "address": "",
+    "accountAdhar": "",
+    "accountPanCard": "",
+    "accountProfileImage": "",
+    "accountSignature": "",
+    "accountNumber": "",
+    "balance": 0.0,
+    "accountType": "",
+    "isVerified": "",
+    "isClosed": "",
+    "lastTransactionDate": "",
+    "accountOpenDate": "",
+    "accountCloseDate": "",
+    "branchCode": "",
+    "branchName": ""
+  },
+  "filters": {
+    "search": "",
+    "accountType": "savings",
+    "isVerified": true,
+    "isClosed": true,
+    "minBalance": "",
+    "maxBalance": "",
+    "accountOwnerName": "",
+    "accountEmail": "",
+    "branchCode": "",
+    "accountOpenDate": "2022-01-01",
+    "accountCloseDate": "2022-12-31",
+    "sortBy": "balance",
+    "sortOrder": "desc"
+  }
+}
