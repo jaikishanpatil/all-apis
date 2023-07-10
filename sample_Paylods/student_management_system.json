@@ -1,0 +1,32 @@
+{
+  "students": {
+    "studentName": "",
+    "studentAge": 0,
+    "studentContact": "",
+    "studentPRN": "",
+    "studentEmail": "",
+    "studentRollNumber": 0,
+    "studentDOB": "",
+    "studentAddress": "",
+    "studentPassword": "",
+    "studentCurrentYear": "",
+    "studentCourse": "",
+    "studentAdmissionDate": ""
+  },
+  "filters": {
+    "search": "",
+    "createdAtStart": "",
+    "createdAtEnd": "",
+    "updatedAtStart": "",
+    "updatedAtEnd": "",
+    "sortBy": "",
+    "sortOrder": "",
+    "studentCurrentYearstart": "",
+    "studentCurrentYearEnd": "",
+    "studentCourse": "",
+    "studentAdmissionDateStart": "",
+    "studentAdmissionDateEnd": "",
+    "studentAgeStart": "",
+    "studentAgeEnd": ""
+  }
+}

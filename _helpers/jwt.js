@@ -8,7 +8,7 @@ function jwt() {
     return expressjwt({ secret, algorithms: ["HS256"] }).unless({
         path: [
             // path to ignor from authenticate from jwt token
-            "/api/user/create",
+            // "/api/user/create",
             "/login",
             "/verify",
         ]

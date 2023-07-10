@@ -44,7 +44,7 @@ async function update(id, params) {  //for admin and user level to update data i
     const user = await getUser(id);
     const emailChanged = params.email && params.email !== user.email;
 
-    if (emailChanged && (await db.User.findOne({ where: { email: email } }))) {
+    if (emailChanged && (await db.User.findOne({ where: { email: params.email } }))) {
         throw `Email '${params.email}' is alredy registered`;
     }
     if (params.password) {
