@@ -10,7 +10,9 @@ router.post("/create", crateSchema, create);
 router.get("/:id", getUserById)
 router.get("/", getAll);
 router.delete("/:id", _delete);
-router.post("/filters",filters);
+router.post("/filters", filters);
+router.post("/forget-password", forgetPassword)
+router.post("/reset-password", resetPassword)
 
 module.exports = router;
 
@@ -49,6 +51,20 @@ function filters(req, res, next) {
     userService
         .filters(req.body)
         .then((user) => res.json(user))
+        .catch(next)
+}
+
+function forgetPassword(req, res, next) {
+    userService
+        .forgetPassword(req.body)
+        .then(() => res.json({ message: "Forget password link send to your Email address successfully, " }))
+        .catch(next)
+}
+
+function resetPassword(req, res, next) {
+    userService
+        .resetPassword(req.body)
+        .then(() => res.json({ message: "Password reset successfully" }))
         .catch(next)
 }
 function crateSchema(res, req, next) {

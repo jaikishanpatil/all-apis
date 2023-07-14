@@ -7,7 +7,15 @@ const config = {
         database: process.env.DB_NAME,              //databse name
         multipleStatements: true,
     },
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    emailConfig:{
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: false,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+        url:"http://127.0.0.1:8000/reset-password"  // we can give our frontend url to redirect the reset password
+    }
 }
 
 module.exports = config;

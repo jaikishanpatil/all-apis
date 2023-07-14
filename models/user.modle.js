@@ -14,7 +14,8 @@ function model(sequelize) {
         password: { type: DataTypes.STRING, allowNull: false },
         isactive: { type: DataTypes.BOOLEAN, defaultValue: true, allowNull: false },
         createdAt: { type: DataTypes.JSON, allowNull: true },
-        updatedAt: { type: DataTypes.JSON, allowNull: true }
+        updatedAt: { type: DataTypes.JSON, allowNull: true },
+        forgetPassToken: { type: DataTypes.STRING, allowNull: true }
     };
 
     const options = {

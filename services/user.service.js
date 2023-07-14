@@ -12,7 +12,9 @@ module.exports = {
     loginUserByEmailOrPhoneNumberAndPassword,
     update,
     deleteUser,
-    filters
+    filters,
+    forgetPassword,
+    resetPassword
 }
 
 //functions for api uses
@@ -91,14 +93,62 @@ async function filters(params) {
         }
     })
 
-    const users=[]
-    result.forEach((x,i)=>{
-        x=omitPassword(x.dataValues)
+    const users = []
+    result.forEach((x, i) => {
+        x = omitPassword(x.dataValues)
         users.push(omitPassword(x))
     })
     return {
         users
     }
+}
+
+async function forgetPassword(params) {
+    const userExist = await getUserByEmail(params);
+
+    if (userExist) {
+        let tranporter = nodemailer.createTransport({
+            host: config.emailConfig.host,
+            port: config.emailConfig.port,
+            secure: config.emailConfig.secure,
+            auth: {
+                user: config.emailConfig.user,
+                pass: config.emailConfig.pass
+            }
+        });
+        const token = await generateToken(userExist);
+        let mailOptions = {
+            from: config.emailConfig.user,
+            to: params.email,
+            subject: `Password Reset`,
+            html: '<p>Hello,</p><p>Click the link below to reset your password:</p><p><a href="' + config.emailConfig.url + '?forgetPassToken=' + token + '">Reset Password</a></p>'
+        }
+        const result = await tranporter.sendMail(mailOptions);
+        //save token into the user database
+        if (result) {
+            userExist.dataValues = {
+                ...userExist.dataValues,
+                forgetPassToken: token
+            }
+            await update(userExist.dataValues.id, userExist.dataValues);
+        }
+    } else {
+        throw "User dose not exists"
+    }
+}
+async function resetPassword(params) {
+    const token = params.forgetPassToken
+    if (!token) throw `Token expire or not found`
+    jwt.verify(token,config.secret,(err,decoded)=>{
+        if(err){
+            throw err;
+        }
+    })
+    params={
+        ...params,
+        forgetPassToken:null
+    }
+    await update(params.id, params);
 }
 
 
@@ -115,5 +165,19 @@ async function getUser(id) {
 function omitPassword(user) {
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
+}
+
+async function getUserByEmail(params) {
+    const user = await db.User.findOne({ where: { email: params.email } })
+    if (!user) throw `User not found`;
+
+    return user
+}
+
+async function generateToken(user) {
+    const payload = {
+        user: { id: user.dataValues.userId }
+    }
+    return jwt.sign(payload, config.secret, { expiresIn: "600s" })
 }
 
