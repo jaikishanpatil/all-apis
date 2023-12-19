@@ -27,7 +27,7 @@ app.use(compression()) //The middleware will attempt to compress response bodies
 const whiteList = [""];
 const corsOption = {
     origin: function (origin, callback) {
-        if (true || whiteList.indexOf(origin) !== 1) {
+        if (true || whiteList.indexOf(origin) !== 1) {  // for production remove true from the condition and deploy it, also add your UI urls to access this apis 
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));

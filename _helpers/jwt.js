@@ -11,6 +11,7 @@ function jwt() {
             // "/api/user/create",
             "/login",
             "/verify",
+            "/create"
         ]
     })
 }
