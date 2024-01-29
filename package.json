@@ -4,7 +4,9 @@
   "description": "It contains all apis that need in every base project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "start:dev": "nodemon index.js"
   },
   "author": "Jaikishan Patil",
   "license": "ISC",
