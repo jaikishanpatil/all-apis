@@ -9,7 +9,9 @@ module.exports = {
     crateProduct,
     updateProduct,
     deleteProduct,
-    filterData
+    filterData,
+    fileUpload,
+    fileUploadMultiple
 }
 
 
@@ -158,4 +160,23 @@ async function getProduct(id) {
     if (!product) throw "Product not found";
 
     return product;
+}
+
+
+// file upload
+async function fileUpload(req,res) {
+    const file = req.file
+    console.log(file ," file")
+    if(!file){
+        return new Error("Please select the file");
+    }
+    await res.send(file);
+}
+async function fileUploadMultiple(req,res) {
+    const files = req.files
+    console.log(files ," files")
+    if(!files){
+        return new Error("Please select the file");
+    }
+    await res.send(files);
 }
